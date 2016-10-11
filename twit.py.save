@@ -1,0 +1,11 @@
+import requests
+import json
+
+from requests_oauthlib import OAuth1
+url = 'https://api.twitter.com/1.1/search/tweets.json?q=%23FeesMustFall&src=tyah'
+auth = OAuth1('1WlVtlobestZ0GmbQE1n3hQSM', 'GmARTizEZwmQQtpcl6aVyIdgY4d3iLR4STrqy0XSHxGH1as6K7',
+                  '784026543232352256-XmIou6ilTZtKs8ef6IBHTJqa2UEtsED', '7G7h3YBrP5EKsIMiPL7DISCKwFgmpeRb852LQumliCkhf')
+r  = requests.get(url, auth=auth)
+print(r.json())
+print(data)
+
