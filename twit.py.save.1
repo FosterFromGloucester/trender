@@ -7,16 +7,13 @@ from requests_oauthlib import OAuth1
 
 
 def getResults(sinceId):
-	from OpenSSL.SSL import SysCallError, ZeroReturnError
-	from requests.exceptions import SSLError
-	try:
-		url = 'https://api.twitter.com/1.1/search/tweets.json?q=FeesMustFall&src=tyah'+'&'+sinceId+'&result_type=recent'+'&count=50'
-		auth = OAuth1('1WlVtlobestZ0GmbQE1n3hQSM', 'GmARTizEZwmQQtpcl6aVyIdgY4d3iLR4STrqy0XSHxGH1as6K7','784026543232352256-XmIou6ilTZtKs8ef6IBHTJqa2UEtsED', '7G7h3YBrP5EKsIMiPL7DISCKwFgmpeRb852LQumliCkhf')
-		r  = requests.get(url, auth=auth)
-		data = r.json()
-		return data
-	except(ZeroReturnError,SSLError):
-		return None
+	
+	url = 'https://api.twitter.com/1.1/search/tweets.json?q=FeesMustFall&src=tyah'+'&'+sinceId+'&result_type=recent'+'&count=50'
+	auth = OAuth1('1WlVtlobestZ0GmbQE1n3hQSM', 'GmARTizEZwmQQtpcl6aVyIdgY4d3iLR4STrqy0XSHxGH1as6K7','784026543232352256-XmIou6ilTZtKs8ef6IBHTJqa2UEtsED', '7G7h3YBrP5EKsIMiPL7DISCKwFgmpeRb852LQumliCkhf')
+	r  = requests.get(url, auth=auth)
+	data = r.json()
+	return data
+
 
 def getLastSinceId():
 	file = loadFromFile()
@@ -29,9 +26,8 @@ def main():
 	while(True):
 		lastSinceId = getLastSinceId() 
 		results = getResults(getLastSinceId())
-		if(not results == None):
-			listPrevious = parseResults(results,lastSinceId,listPrevious)
-			time.sleep(60)
+		listPrevious = parseResults(results,lastSinceId,listPrevious)
+		time.sleep(60)
 
 def loadFromFile():
 	with open("daySave.txt") as file:
@@ -55,10 +51,6 @@ def parseResults(data,sinceID,listPrevious):
 		for i in statuses:
 			if(not i['id'] in listPrevious):
 				new = new+1
-				#print("--------------")
-				#print(i['id'])
-				#print(i['text'])
-				#print("------------")
 			ids.append(i['id'])
 
 		listPrevious = ids 
